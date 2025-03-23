@@ -13,9 +13,9 @@ function logout() {
 
 <template>
   <div>
-    <h1>Welcome {{ user?.login }}!</h1>
+    <h1>Welcome {{ user?.email }}!</h1>
     <span>{{ user }}</span>
-    <img :src="user?.avatar_url" alt="User profile picture" class="rounded-full">
+    <img :src="user?.picture" alt="User profile picture" class="rounded-full">
     <UButton @click="logout">
       Logout
     </UButton>
