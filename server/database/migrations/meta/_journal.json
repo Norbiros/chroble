@@ -8,6 +8,20 @@
       "when": 1742404405030,
       "tag": "0000_create_users",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1742731023873,
+      "tag": "0001_boring_salo",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1742731030942,
+      "tag": "0002_third_firebird",
+      "breakpoints": true
     }
   ]
 }

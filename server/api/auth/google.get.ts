@@ -5,9 +5,15 @@ export default defineOAuthGoogleEventHandler({
     scope: ['email'],
   },
   async onSuccess(event: H3Event<EventHandlerRequest>, { user }: { user: any }) {
-    if (user.email.split('@')[1] !== 'lo31.krakow.pl') {
-      return sendRedirect(event, '/?error=invalid_domain')
+    if (!process.env.DO_NOT_RESTRICT_EMAIL_DOMAIN) {
+      if (user.email.split('@')[1] !== 'lo31.krakow.pl') {
+        return sendRedirect(event, '/?error=invalid_domain')
+      }
     }
+
+    await useDrizzle().insert(tables.users).values({
+      email: user.email,
+    }).onConflictDoNothing().execute()
 
     await setUserSession(event, { user })
     return sendRedirect(event, '/panel')
