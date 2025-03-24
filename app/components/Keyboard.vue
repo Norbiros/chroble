@@ -13,7 +13,7 @@ const emit = defineEmits<{
 const rows = [
   ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
   ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
-  ['{backspace}', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '{enter}'],
+  ['backspace', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', 'enter'],
   ['Ą', 'Ć', 'Ę', 'Ł', 'Ń', 'Ó', 'Ś', 'Ź', 'Ż'],
 ]
 
@@ -47,7 +47,7 @@ function getKeyClass(key: string): string {
         v-for="key in row"
         :key="key"
         :value="key"
-        class="flex-2 h-10 hover:bg-red-500"
+        class="flex-2 h-10 select-none hover:bg-red-500"
         :class="getKeyClass(key)"
         @click="handleClick(key)"
       />

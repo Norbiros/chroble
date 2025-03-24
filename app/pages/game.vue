@@ -5,7 +5,7 @@ const knownLetters = ref<Map<string, LetterState>>(new Map())
 function keyPressed(key: string) {
   let typedWord = words.value[words.value.length - 1] ?? []
 
-  if (key === '{backspace}') {
+  if (key === 'backspace') {
     typedWord.pop()
     return
   }
@@ -14,7 +14,7 @@ function keyPressed(key: string) {
     typedWord.push(new Letter(key, LetterState.Undefined))
   }
 
-  if (key === '{enter}' && typedWord.length === 5) {
+  if (key === 'enter' && typedWord.length === 5) {
     words.value.push(processWord(typedWord))
     /// TODO: This logic is not correct
     // For example if for word AABBC i write AAAAA a will be shown as yellow
