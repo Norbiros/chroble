@@ -1,5 +1,20 @@
 <script setup lang="ts">
 const { loggedIn } = useUserSession()
+
+const route = useRoute()
+if (route.query.error) {
+  let description
+  switch (route.query.error) {
+    case 'invalid_domain':
+      description = 'Możesz zalogować się używając tylko konta szkolnego (@lo31.krakow.pl)'
+      break
+    default:
+      description = 'Nieznany błąd'
+  }
+
+  await callOnce(() => useToast().add({ title: 'Nie udało się zalogować', description, color: 'error' }))
+  useRouter().replace({ query: {} })
+}
 </script>
 
 <template>
