@@ -21,7 +21,7 @@ function logout() {
 
     Miłego zgadywania słów!
 
-    <div class="grid grid-cols-7">
+    <div class="grid grid-cols-7 gap-5">
       <div v-for="(task, index) in data" :key="index" class="border border-gray-700 w-40 text-center">
         <h2 class="bg-red-600">
           {{ task.date }}

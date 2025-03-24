@@ -20,8 +20,10 @@ export default defineEventHandler(async (event) => {
 
   const solvedTaskIds = new Set(solvedTasks.map(t => t.taskId))
 
-  return allTasks.map(task => ({
-    date: task.date,
-    solved: solvedTaskIds.has(task.id),
-  }))
+  return allTasks
+    .map(task => ({
+      date: task.date,
+      solved: solvedTaskIds.has(task.id),
+    }))
+    .sort((a, b) => Date.parse(a.date) - Date.parse(b.date))
 })
