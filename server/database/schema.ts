@@ -19,3 +19,10 @@ export const solutions = sqliteTable('solved_tasks', {
   taskId: integer('task_id').notNull().references(() => tasks.id),
   solvedAt: integer('solved_at', { mode: 'timestamp_ms' }).default(sql`(CURRENT_TIMESTAMP)`),
 })
+
+export const attempts = sqliteTable('attempts', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  solutionId: integer('solution_id').notNull().references(() => solutions.id),
+  attemptAt: integer('attempt_at', { mode: 'timestamp_ms' }).default(sql`(CURRENT_TIMESTAMP)`),
+  answer: text('answer').notNull(),
+})
