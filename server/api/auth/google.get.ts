@@ -15,7 +15,14 @@ export default defineOAuthGoogleEventHandler({
       email: user.email,
     }).onConflictDoNothing().execute()
 
-    await setUserSession(event, { user })
+    const userModel = await useDrizzle().select().from(tables.users).where(eq(tables.users.email, user.email)).execute()
+
+    await setUserSession(event, {
+      user: {
+        id: userModel[0]?.id,
+        ...user,
+      },
+    })
     return sendRedirect(event, '/panel')
   },
   async onError(event, error) {

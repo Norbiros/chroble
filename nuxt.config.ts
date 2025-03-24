@@ -8,6 +8,11 @@ export default defineNuxtConfig({
   typescript: {
     typeCheck: true,
   },
+  nitro: {
+    experimental: {
+      openAPI: true,
+    },
+  },
 
   // Misc
   css: ['~/assets/css/main.css'],
