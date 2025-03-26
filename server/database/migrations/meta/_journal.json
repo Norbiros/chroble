@@ -29,6 +29,13 @@
       "when": 1742813795820,
       "tag": "0003_new_attempts_table",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1742925169820,
+      "tag": "0004_combined_attempts_table",
+      "breakpoints": true
     }
   ]
 }
