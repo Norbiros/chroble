@@ -1,22 +1,16 @@
-import { solutions, tasks } from '~~/server/database/schema'
+import { attempts, tasks } from '~~/server/database/schema'
 
 export default defineEventHandler(async (event) => {
   const { user } = await requireUserSession(event)
-  if (!user) {
-    throw createError({
-      status: 401,
-      message: 'Unauthorized Access',
-    })
-  }
 
   const db = useDrizzle()
 
   const allTasks = await db.select({ id: tasks.id, date: tasks.date }).from(tasks)
 
   const solvedTasks = await db
-    .select({ taskId: solutions.taskId })
-    .from(solutions)
-    .where(eq(solutions.userId, user.id))
+    .select({ taskId: attempts.taskId })
+    .from(attempts)
+    .where(and(eq(attempts.userId, user.id), eq(attempts.isCorrect, true)))
 
   const solvedTaskIds = new Set(solvedTasks.map(t => t.taskId))
 

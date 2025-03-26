@@ -2,7 +2,7 @@
 const words = ref<Letter[][]>([[]])
 const knownLetters = ref<Map<string, LetterState>>(new Map())
 
-function keyPressed(key: string) {
+async function keyPressed(key: string) {
   let typedWord = words.value[words.value.length - 1] ?? []
 
   if (key === 'backspace') {
@@ -10,13 +10,13 @@ function keyPressed(key: string) {
     return
   }
 
-  if (typedWord.length < 5) {
+  if (typedWord.length < 5 && key !== 'enter') {
     typedWord.push(new Letter(key, LetterState.Undefined))
   }
 
   if (key === 'enter' && typedWord.length === 5) {
-    words.value.push(processWord(typedWord))
-    /// TODO: This logic is not correct
+    words.value.push(await processWord(typedWord))
+    // TODO: This logic is not correct
     // For example if for word AABBC i write AAAAA a will be shown as yellow
     for (const letter of typedWord) {
       knownLetters.value.set(letter.letter, letter.state)
@@ -27,20 +27,32 @@ function keyPressed(key: string) {
   words.value[words.value.length - 1] = typedWord
 }
 
-function processWord(word: Letter[]): Letter[] {
+async function processWord(word: Letter[]): Promise<Letter[]> {
   // TODO: Verify if it should show yellow multiple times if there is only one letter
-  const targetWord = 'MIECZ'
-  word.forEach((letter, index) => {
-    if (letter.letter === targetWord[index]) {
-      letter.state = LetterState.Correct
-    } else if (targetWord.includes(letter.letter)) {
-      letter.state = LetterState.Present
-    } else {
-      letter.state = LetterState.Absent
-    }
-  })
-  return word
-};
+  const lettersString = word.map(letter => letter.letter).join('')
+
+  try {
+    const response = await $fetch('/api/task/attempt', {
+      method: 'POST',
+      body: {
+        answer: lettersString,
+      },
+    }) as Letter[]
+
+    word.forEach((letter, index) => {
+      letter.state = response[index]!.state
+    })
+
+    return response as Letter[]
+  } catch (e) {
+    useToast().add({
+      title: 'Błąd',
+      description: `${e}`,
+      color: 'error',
+    })
+    return word
+  }
+}
 </script>
 
 <template>
