@@ -23,6 +23,7 @@ export default defineNuxtConfig({
     '@nuxt/eslint',
     '@nuxthub/core',
     'nuxt-auth-utils',
+    '@nuxtjs/seo',
   ],
 
   // Module related configuration
@@ -36,5 +37,12 @@ export default defineNuxtConfig({
 
   hub: {
     database: true,
+  },
+
+  site: {
+    url: 'https://kingdomdle.nuxt.dev/',
+    name: 'Kingdomdle',
+    description: 'Zgaduj słowa związane z królestwem Bolesława Chrobrego i pokaż dominacje nad innymi uczniami 31 Liceum!',
+    defaultLocale: 'pl',
   },
 })
