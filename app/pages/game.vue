@@ -2,6 +2,11 @@
 const words = ref<Letter[][]>([[]])
 const knownLetters = ref<Map<string, LetterState>>(new Map())
 
+const { data } = await useFetch('/api/attempt')
+if (data.value && data.value.length > 0) {
+  words.value = data.value
+}
+
 async function keyPressed(key: string) {
   let typedWord = words.value[words.value.length - 1] ?? []
 
@@ -32,7 +37,7 @@ async function processWord(word: Letter[]): Promise<Letter[]> {
   const lettersString = word.map(letter => letter.letter).join('')
 
   try {
-    const response = await $fetch('/api/task/attempt', {
+    const response = await $fetch('/api/attempt', {
       method: 'POST',
       body: {
         answer: lettersString,

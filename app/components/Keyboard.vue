@@ -44,7 +44,7 @@ function getKeyClass(key: string): string {
         v-for="key in row"
         :key="key"
         :value="key"
-        class="flex-2 h-10 select-none hover:bg-gray-200 dark:hover:bg-neutral-900 "
+        class="flex-2 h-10 text-md select-none hover:bg-gray-200 dark:hover:bg-neutral-900 "
         :class="getKeyClass(key)"
         @click="handleClick(key)"
       />

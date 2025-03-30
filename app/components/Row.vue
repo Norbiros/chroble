@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { defineProps } from 'vue'
-
 const props = defineProps({
   letters: {
     type: Array as () => Letter[],
@@ -17,9 +15,9 @@ function getLetterClass(state: LetterState): string {
     case LetterState.Absent:
       return 'bg-gray-300 text-black'
     default:
-      return '' // Default case
+      return ''
   }
-};
+}
 
 function getLetterAtIndex(index: number): Letter {
   return props.letters[index] || new Letter('', LetterState.Undefined)
