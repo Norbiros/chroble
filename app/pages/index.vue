@@ -29,7 +29,7 @@ if (route.query.error) {
       v-if="!loggedIn"
       to="/api/auth/google"
       icon="i-simple-icons-google"
-      label="Login with Google"
+      label="Zaloguj się szkolnym kontem Google"
       size="xs"
       external
     />
