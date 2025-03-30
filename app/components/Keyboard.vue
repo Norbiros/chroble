@@ -24,18 +24,15 @@ function handleClick(key: string) {
 function getKeyClass(key: string): string {
   const state = props.knownLetters.get(key)
 
-  if (!state)
-    return 'bg-gray-800' // Default color for unknown keys
-
   switch (state) {
     case LetterState.Correct:
       return 'bg-green-500' // Correct letter
     case LetterState.Absent:
       return 'bg-gray-500' // Incorrect letter
     case LetterState.Present:
-      return 'bg-yellow-500' // Pending letter
+      return 'bg-yellow-500'
     default:
-      return 'bg-gray-800' // Default color
+      return 'bg-gray-100 dark:bg-gray-800'
   }
 }
 </script>
@@ -47,7 +44,7 @@ function getKeyClass(key: string): string {
         v-for="key in row"
         :key="key"
         :value="key"
-        class="flex-2 h-10 select-none hover:bg-red-500"
+        class="flex-2 h-10 select-none hover:bg-gray-200 dark:hover:bg-neutral-900 "
         :class="getKeyClass(key)"
         @click="handleClick(key)"
       />
