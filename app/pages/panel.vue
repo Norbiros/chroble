@@ -39,7 +39,7 @@ function logout() {
           task.date === today ? 'border-red-500' : 'border-gray-700',
         ]"
       >
-        <h2 class="bg-red-600 text-white p-2 rounded-t-lg">
+        <h2 class="bg-red-500 text-white p-2 rounded-t-lg">
           {{ task.date }}
         </h2>
         <div class="p-3 flex flex-wrap justify-center items-center gap-2">
