@@ -30,7 +30,7 @@ if (route.query.error) {
       to="/api/auth/google"
       icon="i-simple-icons-google"
       label="Zaloguj się szkolnym kontem Google"
-      size="xs"
+      class="p-2"
       external
     />
 

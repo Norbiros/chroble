@@ -19,7 +19,6 @@ const items = ref<NavigationMenuItem[][]>([
     },
     {
       slot: 'panel',
-      to: '/panel',
     },
   ],
 ])
@@ -41,11 +40,14 @@ const items = ref<NavigationMenuItem[][]>([
       </template>
 
       <template #panel>
-        <div>
-          <UButton class="px-5">
+        <AuthState v-slot="{ loggedIn }">
+          <UButton v-if="loggedIn" class="px-5" to="/panel">
             Zagraj!
           </UButton>
-        </div>
+          <UButton v-else class="px-5" to="/api/auth/google" external>
+            Zaloguj się
+          </UButton>
+        </AuthState>
       </template>
     </UNavigationMenu>
   </nav>
