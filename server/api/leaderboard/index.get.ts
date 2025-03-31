@@ -1,4 +1,4 @@
-import { count, desc } from 'drizzle-orm'
+import { count, countDistinct, desc } from 'drizzle-orm'
 import { attempts, users } from '~~/server/database/schema'
 
 export default defineEventHandler(async () => {
@@ -8,7 +8,7 @@ export default defineEventHandler(async () => {
     .select({
       userId: users.id,
       email: users.email,
-      solvedCount: count(),
+      solvedCount: countDistinct(attempts.taskId),
     })
     .from(users)
     .leftJoin(attempts, eq(users.id, attempts.userId))
