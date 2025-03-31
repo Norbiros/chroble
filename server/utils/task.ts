@@ -21,7 +21,7 @@ export function compareWord(word: string, correctWord: string): Letter[] {
   word.split('').forEach((letter, index) => {
     if (letter === correctWord[index]) {
       output.push(new Letter(letter, LetterState.Correct))
-    } else if (correctWord.includes(letter)) {
+    } else if (correctWord.includes(letter) && word[correctWord.indexOf(letter)] !== letter) {
       output.push(new Letter(letter, LetterState.Present))
     } else {
       output.push(new Letter(letter, LetterState.Absent))
