@@ -1,4 +1,5 @@
 import { compareWord, getTaskForToday } from '~~/server/utils/task'
+import { isWordInList } from '~~/server/utils/words'
 
 export default defineEventHandler(async (event) => {
   const { user } = await requireUserSession(event)
@@ -7,6 +8,10 @@ export default defineEventHandler(async (event) => {
   const { answer } = body
   if (!answer || answer.length !== 5) {
     throw createError({ statusCode: 400, message: 'Invalid request' })
+  }
+
+  if (!isWordInList(answer)) {
+    throw createError({ statusCode: 400, message: 'Invalid word' })
   }
 
   const normalizedAnswer = answer.toUpperCase()
