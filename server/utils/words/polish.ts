@@ -1,3 +1,4 @@
+export const WORDS = `
 abace
 abaci
 abaka
@@ -26436,3 +26437,4 @@ zżywa
 żyzne
 żyzny
 żyźni
+`.split('\n')

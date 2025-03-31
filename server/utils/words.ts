@@ -1,23 +1,6 @@
-import { promises as fs } from 'node:fs'
-import { join } from 'node:path'
-
-// TODO: Use bun api
-
-const path = 'server/utils/words/polish.txt'
-let words: string[] = []
-
-async function loadWords() {
-  try {
-    const content = await fs.readFile(join(process.cwd(), path), 'utf-8')
-    words = content.split('\n').map(word => word.trim().toUpperCase())
-  } catch (error) {
-    console.error('Error loading word list:', error)
-  }
-}
-
-loadWords().then((_words) => {})
+import { WORDS } from '~~/server/utils/words/polish'
 
 export function isWordInList(word: string) {
-  const normalizedWord = word.trim().toUpperCase()
-  return words.includes(normalizedWord)
+  const normalizedWord = word.trim().toLowerCase()
+  return WORDS.includes(normalizedWord)
 }
