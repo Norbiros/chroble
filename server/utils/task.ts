@@ -57,3 +57,9 @@ export function compareWord(word: string, correctWord: string): Letter[] {
 
   return output
 }
+
+export function isGameFinished(attempts: Letter[][]) {
+  return attempts.some(attempt =>
+    attempt.every(letter => letter.state === LetterState.Correct),
+  )
+}

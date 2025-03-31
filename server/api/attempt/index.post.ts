@@ -1,4 +1,5 @@
-import { compareWord, getTaskForToday } from '~~/server/utils/task'
+import { attempts } from '~~/server/database/schema'
+import { compareWord, getTaskForToday, isGameFinished } from '~~/server/utils/task'
 import { isWordInList } from '~~/server/utils/words'
 
 export default defineEventHandler(async (event) => {
@@ -11,7 +12,16 @@ export default defineEventHandler(async (event) => {
   }
 
   if (!isWordInList(answer)) {
-    throw createError({ statusCode: 400, message: 'Invalid word' })
+    throw createError({ statusCode: 400, message: 'Takie słowo nie istnieje w słowniku' })
+  }
+
+  const correctUserAttempts = await useDrizzle()
+    .select()
+    .from(attempts)
+    .where(and(eq(attempts.userId, user.id), eq(attempts.isCorrect, true)))
+
+  if (correctUserAttempts.length > 0) {
+    throw createError({ statusCode: 400, message: 'Już dzisiaj rozwiązałeś/aś zagadke! Spróbuj jutro' })
   }
 
   const normalizedAnswer = answer.toUpperCase()
@@ -29,5 +39,14 @@ export default defineEventHandler(async (event) => {
     .returning()
     .get()
 
-  return compareWord(normalizedAnswer, todayWord)
+  const word = compareWord(normalizedAnswer, todayWord)
+  let winMessage
+  if (isGameFinished([word])) {
+    winMessage = todayTask.answer
+  }
+
+  return {
+    letters: compareWord(normalizedAnswer, todayWord),
+    winMessage,
+  }
 })

@@ -2,9 +2,12 @@
 const words = ref<Letter[][]>([[]])
 const knownLetters = ref<Map<string, LetterState>>(new Map())
 
+const isWinModalOpen = ref(false)
+const winModalMessage = ref('')
+
 const { data } = await useFetch('/api/attempt')
-if (data.value && data.value.length > 0) {
-  words.value = [...data.value, []]
+if (data.value && data.value.letters.length > 0) {
+  words.value = [...data.value.letters, []]
 }
 
 async function keyPressed(key: string) {
@@ -20,7 +23,7 @@ async function keyPressed(key: string) {
   }
 
   if (key === 'enter' && typedWord.length === 5) {
-    words.value.push(await processWord(typedWord))
+    await processWord(typedWord)
     // TODO: This logic is not correct
     // For example if for word AABBC i write AAAAA a will be shown as yellow
     for (const letter of typedWord) {
@@ -32,7 +35,7 @@ async function keyPressed(key: string) {
   words.value[words.value.length - 1] = typedWord
 }
 
-async function processWord(word: Letter[]): Promise<Letter[]> {
+async function processWord(word: Letter[]) {
   // TODO: Verify if it should show yellow multiple times if there is only one letter
   const lettersString = word.map(letter => letter.letter).join('')
 
@@ -42,26 +45,46 @@ async function processWord(word: Letter[]): Promise<Letter[]> {
       body: {
         answer: lettersString,
       },
-    }) as Letter[]
+    })
 
     word.forEach((letter, index) => {
-      letter.state = response[index]!.state
+      letter.state = response.letters[index]!.state
     })
 
-    return response as Letter[]
-  } catch (e) {
+    words.value.push(response.letters as Letter[])
+
+    if (response?.winMessage) {
+      winModalMessage.value = response?.winMessage
+      isWinModalOpen.value = true
+    }
+  } catch (exception) {
+    console.error(exception)
+    const errorData = (exception as any)?.data
     useToast().add({
       title: 'Błąd',
-      description: `${e}`,
+      description: `${errorData.message} :c`,
       color: 'error',
     })
-    return word
   }
 }
 </script>
 
 <template>
   <div>
+    <UModal v-model:open="isWinModalOpen">
+      <template #content>
+        <div class="p-5">
+          <h1 class="text-2xl font-bold">
+            Gratulacje!
+          </h1>
+          <span class="text-md">Udało ci się rozwiązać dzisiejszą zagadkę.</span>
+
+          <span>To hasło oznacza:</span>
+          <span>{{ winModalMessage }}</span>
+        </div>
+      </template>
+    </UModal>
+
     <h1 class="w-full text-center font-bold text-6xl p-5 mt-5">
       👑 Chroble
     </h1>
