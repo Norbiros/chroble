@@ -16,6 +16,7 @@ export async function getTaskForToday(): Promise<Task | undefined> {
   return solvedTasks[0]
 }
 
+// TODO: Implement it properly, don't use any etc.
 export function compareWord(word: string, correctWord: string): Letter[] {
   const output = []
   const correctWordCount: any = {}
@@ -43,7 +44,7 @@ export function compareWord(word: string, correctWord: string): Letter[] {
   // Second pass: Mark present letters
   for (let i = 0; i < word.length; i++) {
     if (output[i] === null) {
-      const letter = word[i]
+      const letter = word[i]!
       if (correctWord.includes(letter) && correctWordCount[letter] > 0 && wordCount[letter] > 0) {
         output[i] = new Letter(letter, LetterState.Present)
         correctWordCount[letter]--
