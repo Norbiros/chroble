@@ -18,12 +18,12 @@ if (route.query.error) {
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-center gap-4 h-screen">
+  <div class="flex flex-col items-center justify-center gap-4">
     <h1 class="font-bold text-2xl text-(--ui-primary)">
       👑 Chroble
     </h1>
 
-    Pokaż swoją dominacje nad innymi uczniami 31 liceum w wiedzy o słowach i królu Bolesławie!
+    <span class="mx-5 text-center">Pokaż swoją dominacje nad innymi uczniami 31 liceum w wiedzy o słowach i królu Bolesławie!</span>
 
     <UButton
       v-if="!loggedIn"

@@ -10,16 +10,16 @@ const columns: TableColumn<any>[] = [
   },
   {
     accessorKey: 'solvedCount',
-    header: 'Ilość rozwiązanych',
+    header: 'Ilość rozwiązanych zadań',
   },
 ]
 </script>
 
 <template>
-  <div class="mx-20">
+  <div class="mx-12 mt-10">
     <h1 class="text-2xl font-bold">
       Ranking
     </h1>
-    <UTable :data="data" :columns="columns" class="flex-1 mx-10" />
+    <UTable :data="data" :columns="columns" class="flex-1" />
   </div>
 </template>
