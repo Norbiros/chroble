@@ -1,4 +1,5 @@
 import { promises as fs } from 'node:fs'
+import { join } from 'node:path'
 
 // TODO: Use bun api
 
@@ -7,7 +8,7 @@ let words: string[] = []
 
 async function loadWords() {
   try {
-    const content = await fs.readFile(path, 'utf-8')
+    const content = await fs.readFile(join(process.cwd(), path), 'utf-8')
     words = content.split('\n').map(word => word.trim().toUpperCase())
   } catch (error) {
     console.error('Error loading word list:', error)
