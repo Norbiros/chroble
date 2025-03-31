@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { TableColumn } from '#ui/components/Table.vue'
+
 const { data } = await useFetch('/api/leaderboard')
 
 const columns: TableColumn<any>[] = [
