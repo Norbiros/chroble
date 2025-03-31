@@ -4,7 +4,7 @@ const knownLetters = ref<Map<string, LetterState>>(new Map())
 
 const { data } = await useFetch('/api/attempt')
 if (data.value && data.value.length > 0) {
-  words.value = data.value
+  words.value = [...data.value, []]
 }
 
 async function keyPressed(key: string) {
