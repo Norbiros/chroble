@@ -19,7 +19,7 @@ function logout() {
     <header class="flex items-center justify-between">
       <div class="flex items-center gap-2">
         <h1 class="font-bold text-2xl">
-          Witaj {{ user?.email }} w Kingdomdle!
+          Witaj {{ user?.email }} w Chroble!
         </h1>
       </div>
       <UButton class="bg-red-600 hover:bg-red-700 text-white" @click="logout">

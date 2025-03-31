@@ -40,8 +40,8 @@ export default defineNuxtConfig({
   },
 
   site: {
-    url: 'https://kingdomdle.nuxt.dev/',
-    name: 'Kingdomdle',
+    url: 'https://chroble.nuxt.dev/',
+    name: 'Chroble',
     description: 'Zgaduj słowa związane z królestwem Bolesława Chrobrego i pokaż dominacje nad innymi uczniami 31 Liceum!',
     defaultLocale: 'pl',
   },

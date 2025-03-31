@@ -20,7 +20,7 @@ if (route.query.error) {
 <template>
   <div class="flex flex-col items-center justify-center gap-4 h-screen">
     <h1 class="font-bold text-2xl text-(--ui-primary)">
-      👑 Kingdomdle
+      👑 Chroble
     </h1>
 
     Pokaż swoją dominacje nad innymi uczniami 31 liceum w wiedzy o słowach i królu Bolesławie!

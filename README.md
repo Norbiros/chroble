@@ -1,4 +1,4 @@
-# 👑 Kingdomdle
+# 👑 Chroble
 
 Simple wordle-like game for "1000-lecie Królestwa Polskiego" competition.
 

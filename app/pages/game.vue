@@ -63,7 +63,7 @@ async function processWord(word: Letter[]): Promise<Letter[]> {
 <template>
   <div>
     <h1 class="w-full text-center font-bold text-6xl p-5 mt-5">
-      👑 Kingdomdle
+      👑 Chroble
     </h1>
     <div class="flex flex-col gap-3">
       <Row v-for="index in 6" :key="index" :letters="words[index - 1] ?? []" />
