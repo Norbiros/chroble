@@ -73,13 +73,13 @@ async function processWord(word: Letter[]) {
   <div>
     <UModal v-model:open="isWinModalOpen">
       <template #content>
-        <div class="p-5">
+        <div class="p-5 flex flex-col">
           <h1 class="text-2xl font-bold">
             Gratulacje!
           </h1>
           <span class="text-md">Udało ci się rozwiązać dzisiejszą zagadkę.</span>
 
-          <span>To hasło oznacza:</span>
+          <span class="font-bold">To hasło oznacza:</span>
           <span>{{ winModalMessage }}</span>
         </div>
       </template>
