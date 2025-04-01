@@ -7,6 +7,7 @@ export default defineOAuthGoogleEventHandler({
   async onSuccess(event: H3Event<EventHandlerRequest>, { user }: { user: any }) {
     if (!process.env.DO_NOT_RESTRICT_EMAIL_DOMAIN) {
       if (user.email.split('@')[1] !== 'lo31.krakow.pl') {
+        await clearUserSession(event)
         return sendRedirect(event, '/?error=invalid_domain')
       }
     }
