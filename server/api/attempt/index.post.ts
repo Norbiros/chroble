@@ -15,18 +15,24 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, message: 'Takie słowo nie istnieje w słowniku' })
   }
 
-  const correctUserAttempts = await useDrizzle()
-    .select()
-    .from(attempts)
-    .where(and(eq(attempts.userId, user.id), eq(attempts.isCorrect, true)))
-
-  if (correctUserAttempts.length > 0) {
-    throw createError({ statusCode: 400, message: 'Już dzisiaj rozwiązałeś/aś zagadke! Spróbuj jutro' })
-  }
-
   const normalizedAnswer = answer.toUpperCase()
   const todayTask = (await getTaskForToday())!
   const todayWord = todayTask.word.toUpperCase()
+
+  const correctUserAttempts = await useDrizzle()
+    .select()
+    .from(attempts)
+    .where(
+      and(
+        eq(attempts.userId, user.id),
+        eq(attempts.isCorrect, true),
+        eq(attempts.id, todayTask.id),
+      ),
+    )
+
+  if (correctUserAttempts.length > 0) {
+    throw createError({ statusCode: 400, message: 'Już dzisiaj rozwiązałeś/aś zagadkę! Spróbuj jutro' })
+  }
 
   await useDrizzle()
     .insert(tables.attempts)
