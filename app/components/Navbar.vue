@@ -2,12 +2,7 @@
 import type { NavigationMenuItem } from '@nuxt/ui'
 
 const items = ref<NavigationMenuItem[][]>([
-  [
-    {
-      slot: 'icon',
-      to: '/',
-    },
-  ],
+  [],
   [
     {
       label: 'Ranking',
@@ -22,33 +17,28 @@ const items = ref<NavigationMenuItem[][]>([
     },
   ],
 ])
+
+const isOpen = ref(false)
+const route = useRoute()
+
+watch(() => route.path, () => {
+  isOpen.value = false
+})
 </script>
 
 <template>
-  <nav class="px-10 top-0 z-10 sticky w-full border-b-1 border-neutral-600 bg-(--ui-bg)">
-    <UNavigationMenu
-      highlight
-      highlight-color="primary"
-      orientation="horizontal"
-      :items="items"
-      class="flex-1"
-    >
-      <template #icon>
-        <h1 class="text-xl font-bold whitespace-nowrap text-white">
-          👑 Chroble
-        </h1>
-      </template>
+  <nav class="px-10 top-0 z-10 sticky w-full border-b border-neutral-600 bg-(--ui-bg) flex items-center justify-between">
+    <ULink class="text-xl font-bold whitespace-nowrap text-white" to="/">
+      👑 Chroble
+    </ULink>
+    <UButton :icon="isOpen ? 'i-heroicons-x-mark' : 'i-heroicons-bars-3'" class="md:hidden" @click="isOpen = !isOpen" />
 
-      <template #panel>
-        <AuthState v-slot="{ loggedIn }">
-          <UButton v-if="loggedIn" class="px-5" to="/panel">
-            Zagraj!
-          </UButton>
-          <UButton v-else class="px-5" to="/api/auth/google" external>
-            Zaloguj się
-          </UButton>
-        </AuthState>
+    <NavbarLinks :items="items" :is-mobile="false" class="hidden md:flex" />
+
+    <USlideover v-model:open="isOpen" class="top-(--ui-header-height) h-full" :overlay="false" :modal="false">
+      <template #content>
+        <NavbarLinks :items="items" :is-mobile="true" class="items-center text-center text-3xl" />
       </template>
-    </UNavigationMenu>
+    </USlideover>
   </nav>
 </template>
