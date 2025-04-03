@@ -16,6 +16,13 @@ export default defineNuxtConfig({
 
   // Misc
   css: ['~/assets/css/main.css'],
+  app: {
+    head: {
+      meta: [
+        { name: 'theme-color', content: '#ff6467' },
+      ],
+    },
+  },
 
   // Modules list
   modules: [
