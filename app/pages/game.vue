@@ -10,6 +10,10 @@ if (data.value && data.value.letters.length > 0) {
   words.value = [...data.value.letters, []]
 }
 
+for (const word of words.value) {
+  updateKnownLetters(word)
+}
+
 async function keyPressed(key: string) {
   let typedWord = words.value[words.value.length - 1] ?? []
 
@@ -24,14 +28,7 @@ async function keyPressed(key: string) {
 
   if (key === 'enter' && typedWord.length === 5) {
     await processWord(typedWord)
-
-    for (const letter of typedWord) {
-      const previousLetter = knownLetters.value.get(letter.letter) ?? LetterState.Undefined
-
-      if (letter.state > previousLetter) {
-        knownLetters.value.set(letter.letter, letter.state)
-      }
-    }
+    updateKnownLetters(typedWord)
     typedWord = []
   }
 
@@ -68,6 +65,15 @@ async function processWord(word: Letter[]) {
       description: `${errorData.message} :c`,
       color: 'error',
     })
+  }
+}
+
+function updateKnownLetters(word: Letter[]) {
+  for (const letter of word) {
+    const previousLetter = knownLetters.value.get(letter.letter) ?? LetterState.Undefined
+    if (letter.state > previousLetter) {
+      knownLetters.value.set(letter.letter, letter.state)
+    }
   }
 }
 </script>
