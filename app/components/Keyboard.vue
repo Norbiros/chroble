@@ -17,9 +17,20 @@ const rows = [
   ['Ą', 'Ć', 'Ę', 'Ł', 'Ń', 'Ó', 'Ś', 'Ź', 'Ż'],
 ]
 
+window.addEventListener('keypress', (event) => {
+  if (!rows.flat().includes(event.key.toUpperCase())
+    || !rows.flat().includes(event.key.toLowerCase())) {
+    return
+  }
+
+  event.preventDefault()
+  const key = event.key.toUpperCase()
+  emit('keyPressed', key)
+})
+
 function handleClick(key: string) {
   emit('keyPressed', key)
-};
+}
 
 function getKeyClass(key: string): string {
   const state = props.knownLetters.get(key)
