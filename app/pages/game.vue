@@ -24,10 +24,13 @@ async function keyPressed(key: string) {
 
   if (key === 'enter' && typedWord.length === 5) {
     await processWord(typedWord)
-    // TODO: This logic is not correct
-    // For example if for word AABBC i write AAAAA a will be shown as yellow
+
     for (const letter of typedWord) {
-      knownLetters.value.set(letter.letter, letter.state)
+      const previousLetter = knownLetters.value.get(letter.letter) ?? LetterState.Undefined
+
+      if (letter.state > previousLetter) {
+        knownLetters.value.set(letter.letter, letter.state)
+      }
     }
     typedWord = []
   }

@@ -1,8 +1,8 @@
 export enum LetterState {
-  Correct = 'correct',
-  Present = 'present',
-  Absent = 'absent',
-  Undefined = 'undefined',
+  Correct = 3,
+  Present = 2,
+  Absent = 1,
+  Undefined = 0,
 }
 
 export class Letter {
