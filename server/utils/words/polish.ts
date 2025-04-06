@@ -17010,6 +17010,7 @@ pruła
 pruło
 pruły
 pruta
+prusy
 prutą
 prute
 pruto
