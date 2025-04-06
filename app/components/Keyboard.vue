@@ -23,9 +23,9 @@ onKeyStroke((event) => {
   const key = event.key.toUpperCase()
 
   if (key === 'BACKSPACE' || key === 'ENTER') {
-    emit('keyPressed', key.toLowerCase())
+    handleClick(key.toLowerCase())
   } else if (rows.flat().includes(key)) {
-    emit('keyPressed', key)
+    handleClick(key)
   }
 })
 
