@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { onKeyStroke } from '@vueuse/core'
+
 const props = defineProps({
   knownLetters: {
     type: Map<string, LetterState>,
@@ -17,9 +19,19 @@ const rows = [
   ['Ą', 'Ć', 'Ę', 'Ł', 'Ń', 'Ó', 'Ś', 'Ź', 'Ż'],
 ]
 
+onKeyStroke((event) => {
+  const key = event.key.toUpperCase()
+
+  if (key === 'BACKSPACE' || key === 'ENTER') {
+    handleClick(key.toLowerCase())
+  } else if (rows.flat().includes(key)) {
+    handleClick(key)
+  }
+})
+
 function handleClick(key: string) {
   emit('keyPressed', key)
-};
+}
 
 function getKeyClass(key: string): string {
   const state = props.knownLetters.get(key)
