@@ -31,6 +31,7 @@ export default defineNuxtConfig({
     '@nuxthub/core',
     'nuxt-auth-utils',
     '@nuxtjs/seo',
+    '@nuxt/test-utils/module',
   ],
 
   // Module related configuration
