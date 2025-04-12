@@ -26,7 +26,7 @@ export default defineEventHandler(async (event) => {
       and(
         eq(attempts.userId, user.id),
         eq(attempts.isCorrect, true),
-        eq(attempts.id, todayTask.id),
+        eq(attempts.taskId, todayTask.id),
       ),
     )
 
