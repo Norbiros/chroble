@@ -4,7 +4,7 @@ definePageMeta({
 })
 
 const { user, clear } = useUserSession()
-const { data } = await useFetch('/api/task/list')
+const { data } = await useFetch('/api/task/my_list')
 
 const today = new Date().toISOString().split('T')[0]
 

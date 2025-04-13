@@ -1,18 +1,40 @@
-import { countDistinct, desc } from 'drizzle-orm'
-import { attempts, users } from '~~/server/database/schema'
+import { countDistinct } from 'drizzle-orm'
+import { attempts, tasks, users } from '~~/server/database/schema'
+
+interface UserData {
+  email: string
+  solvedCount: number
+  detailedData: Record<string, number>
+}
 
 export default defineEventHandler(async () => {
   const db = useDrizzle()
 
-  return db
+  const result = await db
     .select({
-      userId: users.id,
       email: users.email,
-      solvedCount: countDistinct(attempts.taskId).as('solvedCount'),
+      day: tasks.date,
+      attemptsCount: countDistinct(attempts.id).as('attemptsCount'),
     })
-    .from(users)
-    .leftJoin(attempts, eq(users.id, attempts.userId))
-    .where(eq(attempts.isCorrect, true))
-    .groupBy(users.id)
-    .orderBy(desc(sql`solvedCount`))
+    .from(tasks)
+    .leftJoin(attempts, eq(tasks.id, attempts.taskId))
+    .leftJoin(users, eq(attempts.userId, users.id))
+    .groupBy(users.email, tasks.date)
+
+  const userDayData = result.reduce<Record<string, UserData>>((acc, { email, day, attemptsCount }) => {
+    if (email !== null) {
+      if (!acc[email]) {
+        acc[email] = {
+          email,
+          solvedCount: 0,
+          detailedData: {},
+        }
+      }
+      acc[email].detailedData[day] = attemptsCount
+      acc[email].solvedCount += 1
+    }
+    return acc
+  }, {})
+
+  return Object.values(userDayData)
 })
