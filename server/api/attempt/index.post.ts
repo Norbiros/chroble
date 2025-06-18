@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
   }
 
   if (!isWordInList(answer)) {
-    throw createError({ statusCode: 400, message: 'Takie słowo nie istnieje w słowniku' })
+    throw createError({ statusCode: 400, message: 'Takie słowo nie istnieje w słowniku', data: { disableClear: true } })
   }
 
   const normalizedAnswer = answer.toUpperCase()

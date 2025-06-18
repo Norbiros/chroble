@@ -27,15 +27,17 @@ async function keyPressed(key: string) {
   }
 
   if (key === 'enter' && typedWord.length === 5) {
-    await processWord(typedWord)
-    updateKnownLetters(typedWord)
-    typedWord = []
+    const disableClear = await processWord(typedWord)
+    if (!disableClear) {
+      updateKnownLetters(typedWord)
+      typedWord = []
+    }
   }
 
   words.value[words.value.length - 1] = typedWord
 }
 
-async function processWord(word: Letter[]) {
+async function processWord(word: Letter[]): Promise<boolean> {
   // TODO: Verify if it should show yellow multiple times if there is only one letter
   const lettersString = word.map(letter => letter.letter).join('')
 
@@ -65,7 +67,11 @@ async function processWord(word: Letter[]) {
       description: `${errorData.message} :c`,
       color: 'error',
     })
+    if (errorData?.data?.disableClear) {
+      return true
+    }
   }
+  return false
 }
 
 function updateKnownLetters(word: Letter[]) {
