@@ -16,7 +16,10 @@ export default defineEventHandler(async (event) => {
   }
 
   const normalizedAnswer = answer.toUpperCase()
-  const todayTask = (await getTaskForToday())!
+  const todayTask = (await getTaskForToday())
+  if (!todayTask) {
+    throw createError({ statusCode: 500, message: 'Dzisiaj nie została dodana zagadka' })
+  }
   const todayWord = todayTask.word.toUpperCase()
 
   const correctUserAttempts = await useDrizzle()
