@@ -22,15 +22,27 @@ function getLetterClass(state: LetterState): string {
 function getLetterAtIndex(index: number): Letter {
   return props.letters[index] || new Letter('', LetterState.Undefined)
 }
+
+const revealActive = ref(false)
+
+function reveal() {
+  revealActive.value = true
+}
+
+defineExpose({ reveal })
 </script>
 
 <template>
-  <div class="flex justify-center space-x-2">
+  <div class="flex justify-center space-x-2 transition-colors duration-600 ease-in-out" :class="revealActive ? 'animate-flipRow' : ''">
     <div
       v-for="index in 5"
       :key="index"
       class="w-12 h-12 flex items-center justify-center border border-gray-300 rounded"
-      :class="getLetterClass(getLetterAtIndex(index - 1).state)"
+      style="backface-visibility: hidden;"
+      :class="[
+        getLetterClass(getLetterAtIndex(index - 1).state),
+        index <= letters.length ? 'animate-scaleIn' : '',
+      ]"
     >
       {{ getLetterAtIndex(index - 1).letter }}
     </div>

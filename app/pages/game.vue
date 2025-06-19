@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import Row from '~/components/Row.vue'
+
 const words = ref<Letter[][]>([[]])
 const knownLetters = ref<Map<string, LetterState>>(new Map())
 
@@ -13,6 +15,8 @@ if (data.value && data.value.letters.length > 0) {
 for (const word of words.value) {
   updateKnownLetters(word)
 }
+
+const rows = ref<(InstanceType<typeof Row>)[]>([])
 
 async function keyPressed(key: string) {
   let typedWord = words.value[words.value.length - 1] ?? []
@@ -54,6 +58,7 @@ async function processWord(word: Letter[]): Promise<boolean> {
     })
 
     words.value.push(response.letters as Letter[])
+    rows.value[words.value.length - 2]?.reveal()
 
     if (response?.winMessage) {
       winModalMessage.value = response?.winMessage
@@ -104,7 +109,7 @@ function updateKnownLetters(word: Letter[]) {
       👑 Chroble
     </h1>
     <div class="flex flex-col gap-3">
-      <Row v-for="index in 6" :key="index" :letters="words[index - 1] ?? []" />
+      <Row v-for="index in 6" :key="index" :ref="el => rows[index - 1] = (el as unknown as InstanceType<typeof Row>)" :letters="words[index - 1] ?? []" />
     </div>
     <div class="flex justify-center items-center m-4">
       <Keyboard :known-letters="knownLetters" @key-pressed="keyPressed" />
