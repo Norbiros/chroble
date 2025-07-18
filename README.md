@@ -2,7 +2,7 @@
 
 Simple wordle-like game for "1000-lecie Królestwa Polskiego" competition.
 
-*Created on the occasion of the 1000th anniversary of the Kingdom of Poland.*
+_Created on the occasion of the 1000th anniversary of the Kingdom of Poland._
 
 Made with [Nuxt](https://nuxt.com/docs/getting-started/introduction), [NuxtHub](https://hub.nuxt.com/) and [Nuxt UI](https://ui3.nuxt.dev).
 
